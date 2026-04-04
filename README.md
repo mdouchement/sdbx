@@ -1,11 +1,8 @@
 # sdbx
 
-It spawns containers for any terminal application like opencode leveraging Podman.
-
-Only the specified volumes are mounted so your data won't be leaked when an LLM ask you to read `/etc/*`.
-
-You can find [opencode box file](opencode.yml) as example file.
-
+It spawns containers for any terminal application like opencode leveraging Podman.\
+Only the specified volumes are mounted so your data won't be leaked when an LLM ask you to read `/etc/*`.\
+You can find [opencode box file](opencode.yml) as example file.\
 You can provide `ask_before_running` boolean in each box configuration file so you can see what Podman command will be executed.
 
 ## Installation

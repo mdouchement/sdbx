@@ -16,7 +16,7 @@ create:
 
     pacman --noconfirm --needed -S nodejs npm
     # Install as "host" user (e.g. UID: 1000)
-    sudo -u ${container_user_name} npx get-shit-done-cc@latest
+    su -c 'npx get-shit-done-cc@latest' ${container_user_name}
 
     # Let's say we want to do some Golang dev
     pacman --noconfirm --needed -S go
