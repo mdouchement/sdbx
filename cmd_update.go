@@ -68,6 +68,7 @@ func CommandUpdate() *cobra.Command {
 					fmt.Sprintf("%s:%s:rw,U", config.DataDir, usr.HomeDir),
 					scriptname + ":/usr/bin/update.sh:ro",
 				},
+				Environment: config.Update.Environment,
 			}
 
 			{

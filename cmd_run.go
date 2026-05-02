@@ -75,8 +75,9 @@ func CommandRun() *cobra.Command {
 					"--workdir", currentdir,
 					"--rm",
 				},
-				Command: "/bin/sh /usr/bin/entrypoint.sh",
-				Volumes: config.Run.Volumes,
+				Command:     "/bin/sh /usr/bin/entrypoint.sh",
+				Volumes:     config.Run.Volumes,
+				Environment: config.Run.Environment,
 			}
 
 			cfg.Volumes = append(cfg.Volumes,
