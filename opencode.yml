@@ -8,6 +8,10 @@ description: Opencode box for..
 create:
   ask_before_running: false
   image: docker.io/library/archlinux
+  # environment:
+  #   - MY_VAR1=TROLOLO LO?
+  #   - MY_FORWARDED_VAR1=$MY_HOST_VAR1
+  #   - MY_FORWARDED_VAR2=${MY_HOST_VAR2}
   shell_script: |-
     # Launched as root
     pacman-key --init
@@ -27,6 +31,10 @@ create:
     rustup install stable
 update:
   ask_before_running: false
+  # environment:
+  #   - MY_VAR1=TROLOLO LO?
+  #   - MY_FORWARDED_VAR1=$MY_HOST_VAR1
+  #   - MY_FORWARDED_VAR2=${MY_HOST_VAR2}
   shell_script: |-
     # Launched as current user
     sudo pacman --noconfirm -Syu
@@ -38,3 +46,7 @@ run:
   command: opencode
   volumes:
     - ~/.opencode:~/.opencode:rw,U
+  environment:
+    - MY_VAR1=TROLOLO LO?
+    - MY_FORWARDED_VAR1=$MY_HOST_VAR1
+    - MY_FORWARDED_VAR2=${MY_HOST_VAR2}

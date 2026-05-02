@@ -30,6 +30,7 @@ type BoxConfig struct {
 	ExtraArgs        []string
 	Command          string
 	Volumes          []string
+	Environment      []string
 }
 
 func New(binary, boxname string) (*Box, error) {
@@ -150,6 +151,10 @@ func (b *Box) CraftRun(cfg BoxConfig) []string {
 		"--label", "manager=sdbx",
 		"--env", "container=" + b.binary,
 		"--env", "TERMINFO_DIRS=/usr/share/terminfo:/run/host/usr/share/terminfo",
+	}
+
+	for _, env := range cfg.Environment {
+		cmd = append(cmd, "--env", env)
 	}
 
 	for _, volume := range cfg.Volumes {

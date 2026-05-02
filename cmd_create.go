@@ -84,6 +84,7 @@ func CommandCreate() *cobra.Command {
 					fmt.Sprintf("%s:%s:rw,U", config.DataDir, box.HostUser().HomeDir),
 					scriptname + ":/usr/bin/setup.sh:ro",
 				},
+				Environment: config.Create.Environment,
 			}
 
 			{

@@ -12,20 +12,23 @@ import (
 
 type (
 	CreateConfig struct {
-		AskBeforeRunning bool   `yaml:"ask_before_running"`
-		Image            string `yaml:"image"`
-		ShellScript      string `yaml:"shell_script"`
+		AskBeforeRunning bool     `yaml:"ask_before_running"`
+		Image            string   `yaml:"image"`
+		ShellScript      string   `yaml:"shell_script"`
+		Environment      []string `yaml:"environment"`
 	}
 
 	UpdateConfig struct {
-		AskBeforeRunning bool   `yaml:"ask_before_running"`
-		ShellScript      string `yaml:"shell_script"`
+		AskBeforeRunning bool     `yaml:"ask_before_running"`
+		ShellScript      string   `yaml:"shell_script"`
+		Environment      []string `yaml:"environment"`
 	}
 
 	RunConfig struct {
 		AskBeforeRunning bool     `yaml:"ask_before_running"`
 		Command          string   `yaml:"command"`
 		Volumes          []string `yaml:"volumes"`
+		Environment      []string `yaml:"environment"`
 	}
 
 	Config struct {
@@ -55,6 +58,7 @@ func Load(filename string) (Config, error) {
 		c.LocalImage = strings.TrimSuffix(filepath.Base(filename), filepath.Ext(filename))
 	}
 
+	// Expand volumes pathes to their full path.
 	for i, v := range c.Run.Volumes {
 		parts := strings.Split(v, ":")
 		if len(parts) < 2 || len(parts) > 3 {
@@ -72,6 +76,17 @@ func Load(filename string) (Config, error) {
 		}
 
 		c.Run.Volumes[i] = strings.Join(parts, ":")
+	}
+
+	// Expand with host env variables.
+	for i, v := range c.Create.Environment {
+		c.Create.Environment[i] = os.ExpandEnv(v)
+	}
+	for i, v := range c.Update.Environment {
+		c.Update.Environment[i] = os.ExpandEnv(v)
+	}
+	for i, v := range c.Run.Environment {
+		c.Run.Environment[i] = os.ExpandEnv(v)
 	}
 
 	return c, nil
